@@ -124,7 +124,7 @@ metalytics@analytics:~$ cat user.txt
 
 ## Escalation
 
-## Looney Tunables?
+### Looney Tunables?
 
 ```console
 metalytics@analytics:~$ uname -a
