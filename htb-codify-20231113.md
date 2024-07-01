@@ -229,8 +229,6 @@ done
 [...]
 ```
 
-With that approach, I only needed to guess the first character of the password.
-
 The recovered password works for the root account as well:
 
 ```console
