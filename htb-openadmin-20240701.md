@@ -6,19 +6,16 @@ revisit: false
 # HackTheBox: [OpenAdmin](https://app.hackthebox.com/machines/OpenAdmin)
 
 > [!tip]- Spoiler Summary
-> This Linux server is running a vulnerable version of [OpenNetAdmin](https://opennetadmin.com/). Password re-use allows pivoting from the web user to another admin user. An web server bound to `localhost` allows access to another admin user's private key. PE is then possible via Sudo, granting root access to `nano` which is [trivially escapable](https://gtfobins.github.io/gtfobins/nano/).
+> This Linux server is running a vulnerable version of [OpenNetAdmin](https://opennetadmin.com/). Password re-use allows lateral movement from the web user (`www-data`) to another admin user, `jimmy`. A web server bound to `localhost` provides access to another admin user's private key. Privilege escalation is then possible via Sudo, granting root access to `nano` which is [trivially escapable](https://gtfobins.github.io/gtfobins/nano/).
 
 ## Services
 
 ### TCP
 
-First, a TCP [port scan with `nmap`](nmap-20240610.md):
+First, a [port scan with `nmap`](nmap-20240610.md):
 
 ```console
 # Nmap 7.94SVN scan initiated Mon Jul  1 11:54:57 2024 as: nmap -v -sCV -p- -T4 --min-rate 10000 -oN nmap_tcp t
-Increasing send delay for 10.10.10.171 from 0 to 5 due to 2915 out of 7287 dropped probes since last increase.
-Increasing send delay for 10.10.10.171 from 5 to 10 due to 3089 out of 7721 dropped probes since last increase.
-Warning: 10.10.10.171 giving up on port because retransmission cap hit (6).
 Nmap scan report for t (10.10.10.171)
 Host is up (0.39s latency).
 Not shown: 55237 closed tcp ports (reset), 10296 filtered tcp ports (no-response)
@@ -38,13 +35,13 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 #### 80/tcp-http
 
-Service scan with [`whatweb`](whatweb-20240610.md):
+Web service scan with [`whatweb`](whatweb-20240610.md):
 
 ```console
 http://t [200 OK] Apache[2.4.29], Country[RESERVED][ZZ], HTTPServer[Ubuntu Linux][Apache/2.4.29 (Ubuntu)], IP[10.10.10.171], Title[Apache2 Ubuntu Default Page: It works]
 ```
 
-Fuzzing uncovered `/music` and that led to `/ona`:
+Fuzzing for  uncovered `/music` and that led to `/ona`:
 
 ![](_/htb-openadmin-20240701-1.png)
 
