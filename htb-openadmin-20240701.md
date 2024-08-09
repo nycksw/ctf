@@ -35,8 +35,6 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 #### 80/tcp-http
 
-Web service scan with [`whatweb`](whatweb-20240610.md):
-
 ```console
 http://t [200 OK] Apache[2.4.29], Country[RESERVED][ZZ], HTTPServer[Ubuntu Linux][Apache/2.4.29 (Ubuntu)], IP[10.10.10.171], Title[Apache2 Ubuntu Default Page: It works]
 ```

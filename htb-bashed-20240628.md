@@ -33,8 +33,6 @@ Only a web server is running.
 
 #### 80/tcp-http
 
-Service scan with [`whatweb`](whatweb-20240610.md):
-
 ```console
 $ whatweb -a3 http://t
 http://t [200 OK] Apache[2.4.18], Country[RESERVED][ZZ], HTML5, HTTPServer[Ubuntu Linux][Apache/2.4.18 (Ubuntu)], IP[10.10.10.68], JQuery, Meta-Author[Colorlib], Script[text/javascript], Title[Arrexel's Development Site]
