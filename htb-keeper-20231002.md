@@ -1,5 +1,7 @@
 # HackTheBox: [Keeper](https://app.hackthebox.com/machines/Keeper)
 
+Not a complete walkthrough, only my notes.
+
 ## Enumeration
 
 ```console

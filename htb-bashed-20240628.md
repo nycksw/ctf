@@ -12,8 +12,6 @@ revisit: true
 
 ### TCP
 
-First, a TCP [port scan](port-scanning-20240610.md) with [`nmap`](nmap-20240610.md).
-
 ```console
 # Nmap 7.94SVN scan initiated Fri Jun 28 12:01:48 2024 as: nmap -v -sCV -p- -T4 --min-rate 10000 -oA nmap_tcp t
 Warning: 10.10.10.68 giving up on port because retransmission cap hit (6).

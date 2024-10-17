@@ -12,7 +12,7 @@ revisit: true
 
 ### TCP
 
-First, a TCP [port scan with `nmap`](nmap-20240610.md):
+First, a TCP [port scan with nmap](nmap-20240610.md):
 
 ```console
 # Nmap 7.94SVN scan initiated Wed Aug  7 13:59:01 2024 as: nmap -v -sCV -p- -T4 --min-rate 10000 -oN tcp_full t
