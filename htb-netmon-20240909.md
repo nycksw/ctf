@@ -4,10 +4,6 @@ tags:
 ---
 # HackTheBox: [Netmon](https://app.hackthebox.com/machines/Netmon)
 
-## Summary
-
-Short-form details about the machine and its vulnerabilities.
-
 ## Services
 
 ### TCP
