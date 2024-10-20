@@ -6,10 +6,6 @@ tags:
 
 These are my notes, and not necessarily a detailed walk-through.
 
-## Summary
-
-Short-form details about the machine and its vulnerabilities.
-
 ## Services
 
 ### TCP
