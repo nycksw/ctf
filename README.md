@@ -10,15 +10,17 @@ Personal notes from HackTheBox machines and PortSwigger Web Security Academy lab
 
 **[Flight](md/htb-flight-20241008.md)** - LFI to NTLM hash capture, SMB lateral movement, GodPotato to DCSync.
 
-**[Sauna](md/htb-sauna-20240831.md)** - Kerbrute, ASREP-roasting, AutoLogon credentials from registry.
-
-**[Search](md/htb-search-20240920.md)** - BloodHound analysis and credential chaining.
-
 ### Web Applications
 
 **[MonitorsThree](md/htb-monitorsthree-20241203.md)** - SQLi, XML signature bypass for Cacti RCE, Duplicati privesc.
 
+**[Caption](md/htb-caption-20240920.md)** - GitBucket SQLi to RCE, Thrift API log injection for privilege escalation.
+
 **[Clicker](md/htb-clicker-20241004.md)** - Source code from NFS share, SQLi for role elevation, `PERL5OPT` abuse.
+
+**[Editorial](md/htb-editorial-20240926.md)** - SSRF to reveal internal API credentials, Git history secrets, GitPython CVE.
+
+**[Alert](md/htb-alert-20241203.md)** - XSS and LFI chaining via admin contact form, Apache config disclosure.
 
 **[SolarLab](md/htb-solarlab-20240605.md)** - Multiple RCE vectors, credential decryption.
 
@@ -28,7 +30,19 @@ Personal notes from HackTheBox machines and PortSwigger Web Security Academy lab
 
 **[UpDown](md/htb-updown-20241216.md)** - Git extraction, upload bypass, Python 2.7 injection, `easy_install` sudo.
 
-**[Bizness](md/htb-bizness-20240108.md)** - OFBiz RCE, Derby database hash extraction.
+**[Instant](md/htb-instant-20241113.md)** - APK reverse engineering with MobSF, JWT extraction, Solar-PuTTY session brute-force.
+
+**[Drive](md/htb-drive-20231019.md)** - Django IDOR, setuid binary SQLi to load malicious shared object for root.
+
+### Linux Privilege Escalation
+
+**[Sightless](md/htb-sightless-20240913.md)** - Docker container escape via password reuse, chromedriver remote debugging exploit, Froxlor.
+
+**[BoardLight](md/htb-boardlight-20240527.md)** - Dolibarr CRM authenticated RCE, `enlightenment_sys` SUID binary exploit.
+
+### Windows
+
+**[Mailing](md/htb-mailing-20240530.md)** - LFI for credentials, Outlook phishing for RCE, LibreOffice macro PE.
 
 ### Cookie Security (PortSwigger)
 
